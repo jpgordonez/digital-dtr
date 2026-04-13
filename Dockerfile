@@ -87,12 +87,14 @@ RUN mkdir -p storage/framework/sessions \
     storage/framework/cache \
     storage/logs \
     bootstrap/cache \
- && chown -R www-data:www-data storage bootstrap/cache \
- && chmod -R 775 storage bootstrap/cache \
- && php artisan config:clear \
- && php artisan cache:clear \
- && php artisan route:clear \
- && php artisan view:clear
+    database \
+ && touch database/database.sqlite \
+ && chown -R www-data:www-data storage bootstrap/cache database \
+ && chmod -R 775 storage bootstrap/cache database \
+ && (php artisan config:clear || true) \
+ && (php artisan cache:clear || true) \
+ && (php artisan route:clear || true) \
+ && (php artisan view:clear || true)
 
 # ── nginx configuration ──────────────────────────────────────
 RUN mkdir -p /run/nginx
