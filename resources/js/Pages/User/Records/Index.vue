@@ -82,6 +82,15 @@ const clearFilter = () => {
     })
 }
 
+const downloadPDF = () => {
+    const params = new URLSearchParams()
+
+    if (fromDate.value) params.append('from', fromDate.value)
+    if (toDate.value) params.append('to', toDate.value)
+
+    window.open(`/user/records/pdf?${params.toString()}`)
+}
+
 </script>
 
 <template>
@@ -179,6 +188,12 @@ const clearFilter = () => {
         Clear
     </button>
 
+    <button
+    @click="downloadPDF"
+    class="px-4 py-2 rounded-lg text-sm font-medium
+           bg-blue-600 text-white hover:opacity-90">
+    Preview PDF
+</button>
 </div>
 
     </div>

@@ -150,6 +150,8 @@ Route::prefix('user')->middleware(['auth', 'role:user'])->group(function () {
 
     Route::post('/profile/signatory', [UserProfileController::class, 'updateSignatory']);
 
+    Route::get('/records/pdf', [RecordController::class, 'exportPdf']);
+
 });
 
 require __DIR__.'/auth.php';
