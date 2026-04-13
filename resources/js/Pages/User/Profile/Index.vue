@@ -239,13 +239,33 @@ const showSignatoryModal = ref(false)
     </div>
 
     <!-- IF SET -->
-    <div v-else>
+<div v-else
+     class="flex items-center justify-between">
+
+    <!-- LEFT: COMPANY NAME -->
+    <div>
         <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
             {{
                 props.companies.find(c => c.id == props.userCompany)?.name
             }}
         </h2>
+
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            Your selected company
+        </p>
     </div>
+
+    <!-- RIGHT: LOGO -->
+    <div v-if="props.user.company?.logo"
+         class="w-14 h-14 flex items-center justify-center">
+
+        <img 
+            :src="`/storage/${props.user.company.logo}`"
+            alt="Company Logo"
+            class="w-full h-full object-contain rounded-md" />
+    </div>
+
+</div>
 
 </div>
 

@@ -14,6 +14,7 @@ class ProfileController extends Controller
         {
             /** @var \App\Models\User $user */
             $user = Auth::user();
+            $user->load('company');
 
             return inertia('User/Profile/Index', [
                 'companies' => Company::select('id', 'name')->get(),
@@ -24,10 +25,11 @@ class ProfileController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'profile_photo' => $user->profile_photo,
+                    'company' => $user->company,
                 ],
 
-                'signatoryName' => $user->signatory_name, // ✅ FIXED
-                'signatoryPosition' => $user->signatory_position, // ✅ FIXED
+                'signatoryName' => $user->signatory_name,
+                'signatoryPosition' => $user->signatory_position,
             ]);
         }
 

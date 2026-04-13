@@ -10,7 +10,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
+        $user->load('company');
 
         $needsSetup = !$user->company_id || !$user->required_hours;
 
@@ -55,7 +57,7 @@ class DashboardController extends Controller
                 'name' => $user->name,
                 'signatory' => $user->signatory_name,
                 'signatory_position' => $user->signatory_position,
-                'company' => $user->company?->name,
+                'company' => $user->company,
                 'profile_photo' => $user->profile_photo,
             ]
         ]);

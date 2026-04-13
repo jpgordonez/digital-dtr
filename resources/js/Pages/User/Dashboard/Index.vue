@@ -111,23 +111,39 @@ const formatDate = (date) => {
             </div>
 
             <!-- COMPANY INFO -->
-            <div class="bg-white dark:bg-[#111] 
-                        border border-gray-200 dark:border-[#1f1f1f] 
-                        rounded-xl p-4 shadow-sm">
+             
+<div class="bg-white dark:bg-[#111] 
+            border border-gray-200 dark:border-[#1f1f1f] 
+            rounded-xl p-4 shadow-sm">
 
-                <p class="text-sm text-gray-500 dark:text-gray-400">
-                    Company / Office
-                </p>
+    <div class="flex items-center justify-between">
 
-                <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                    {{ props.user.company || 'Not set' }}
-                </h2>
+        <!-- LEFT -->
+        <div>
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+                Company / Office
+            </p>
 
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    Your assigned OJT workplace
-                </p>
+            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                {{ props.user.company?.name || 'Not set' }}
+            </h2>
 
-            </div>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Your assigned OJT workplace
+            </p>
+        </div>
+
+        <!-- RIGHT LOGO -->
+<div v-if="props.user.company?.logo">
+    <img 
+        :src="`/storage/${props.user.company.logo}`"
+        alt="Company Logo"
+        class="w-14 h-14 object-contain rounded-lg" />
+</div>
+
+    </div>
+
+</div>
             <!-- SIGNATORY INFO -->
             <div class="bg-white dark:bg-[#111] 
                         border border-gray-200 dark:border-[#1f1f1f] 
