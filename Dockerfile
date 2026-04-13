@@ -10,7 +10,10 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 COPY . .
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+RUN mkdir -p bootstrap/cache \
+ && chmod -R 775 bootstrap/cache \
+ && composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
 # ============================================================
 # Stage 2: Node.js asset build
