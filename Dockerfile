@@ -11,9 +11,16 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN mkdir -p bootstrap/cache \
- && chmod -R 775 bootstrap/cache \
- && composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+RUN mkdir -p storage/framework/sessions \
+    storage/framework/views \
+    storage/framework/cache \
+    storage/logs \
+    bootstrap/cache \
+ && chown -R www-data:www-data storage bootstrap/cache \
+ && chmod -R 775 storage bootstrap/cache \
+ && php artisan config:clear \
+ && php artisan route:clear \
+ && php artisan view:clear
 
 # ============================================================
 # Stage 2: Node.js asset build
