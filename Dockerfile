@@ -78,11 +78,9 @@ COPY --from=composer-builder /var/www/html/vendor vendor/
 COPY --from=node-builder /app/public/build public/build/
 
 # ── Laravel bootstrap ────────────────────────────────────────
-RUN cp .env.example .env \
- && php artisan key:generate --force \
- && php artisan config:cache \
- && php artisan route:cache \
- && php artisan view:cache \
+RUN php artisan config:clear \
+ && php artisan route:clear \
+ && php artisan view:clear \
  && mkdir -p storage/framework/{sessions,views,cache} \
                 storage/logs \
                 bootstrap/cache \
@@ -96,6 +94,6 @@ COPY docker/nginx.conf /etc/nginx/nginx.conf
 # ── supervisord configuration ────────────────────────────────
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD php artisan serve --host=0.0.0.0 --port=$PORT
