@@ -11,16 +11,8 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN mkdir -p storage/framework/sessions \
-    storage/framework/views \
-    storage/framework/cache \
-    storage/logs \
-    bootstrap/cache \
- && chown -R www-data:www-data storage bootstrap/cache \
- && chmod -R 775 storage bootstrap/cache \
- && php artisan config:clear \
- && php artisan route:clear \
- && php artisan view:clear
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
 
 # ============================================================
 # Stage 2: Node.js asset build
@@ -88,14 +80,16 @@ COPY --from=composer-builder /var/www/html/vendor vendor/
 COPY --from=node-builder /app/public/build public/build/
 
 # ── Laravel bootstrap ────────────────────────────────────────
-RUN php artisan config:clear \
- && php artisan route:clear \
- && php artisan view:clear \
- && mkdir -p storage/framework/{sessions,views,cache} \
-                storage/logs \
-                bootstrap/cache \
+RUN mkdir -p storage/framework/sessions \
+    storage/framework/views \
+    storage/framework/cache \
+    storage/logs \
+    bootstrap/cache \
  && chown -R www-data:www-data storage bootstrap/cache \
- && chmod -R 775 storage bootstrap/cache
+ && chmod -R 775 storage bootstrap/cache \
+ && php artisan config:clear \
+ && php artisan route:clear \
+ && php artisan view:clear
 
 # ── nginx configuration ──────────────────────────────────────
 RUN mkdir -p /run/nginx
