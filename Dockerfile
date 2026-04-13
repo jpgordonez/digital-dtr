@@ -11,8 +11,6 @@ WORKDIR /var/www/html
 
 COPY . .
 
-COPY . .
-
 RUN mkdir -p bootstrap/cache \
  && chmod -R 775 bootstrap/cache \
  && composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
