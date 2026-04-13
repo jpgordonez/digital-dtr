@@ -97,3 +97,4 @@ COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 EXPOSE 8080
 
 CMD php artisan serve --host=0.0.0.0 --port=$PORT
+# rebuild trigger
