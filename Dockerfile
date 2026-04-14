@@ -78,8 +78,8 @@ COPY . .
 # ── PHP dependencies from composer stage ─────────────────────
 COPY --from=composer-builder /var/www/html/vendor vendor/
 
-# ── Compiled front-end assets from node stage ────────────────
-COPY --from=node-builder /app/public/build public/build/
+# gamitin yung galing sa repo (local build)
+COPY public/build public/build
 
 # ── Laravel bootstrap ────────────────────────────────────────
 RUN mkdir -p storage/framework/sessions \
