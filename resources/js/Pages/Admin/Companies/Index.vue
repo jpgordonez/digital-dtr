@@ -146,9 +146,9 @@ const remove = (id) => {
                 class="hover:bg-gray-50 dark:hover:bg-[#161616] transition">
 
                 <td class="px-6 py-5">
-                    <img v-if="company.logo"
-                         :src="`/storage/${company.logo}`"
-                         class="w-10 h-10 object-contain rounded" />
+<img v-if="company.logo"
+     :src="company.logo.startsWith('http') ? company.logo : `/storage/${company.logo}`"
+     class="w-10 h-10 object-contain rounded" />
                 </td>
 
                 <td class="px-6 py-5 font-medium text-black dark:text-white">
@@ -202,9 +202,9 @@ const remove = (id) => {
 
             <!-- TOP -->
             <div class="flex items-center gap-3">
-                <img v-if="company.logo"
-                     :src="`/storage/${company.logo}`"
-                     class="w-10 h-10 object-contain rounded" />
+<img v-if="company.logo"
+     :src="company.logo.startsWith('http') ? company.logo : `/storage/${company.logo}`"
+     class="w-10 h-10 object-contain rounded" />
 
                 <div class="flex-1">
                     <p class="font-semibold text-black dark:text-white">
