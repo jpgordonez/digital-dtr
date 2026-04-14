@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Company;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\User\AttendanceController;
@@ -12,8 +13,7 @@ use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\RecordController;
 use App\Http\Controllers\User\SettingsController;
 use Illuminate\Support\Facades\Auth;
-use Cloudinary\Cloudinary;
-
+use App\Http\Controllers\Admin\CompanyController;
 
 // LANDING PAGE
 Route::get('/', function () {
@@ -36,106 +36,19 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/students', [StudentController::class, 'index'])->name('admin.students');
     Route::put('/students/{id}', [StudentController::class, 'update'])->name('admin.students.update');
     Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('admin.students.destroy');
-
-    Route::get('/companies', function () {
-        return Inertia::render('Admin/Companies/Index', [
-            'companies' => Company::latest()->get()
-        ]);
-    })->name('admin.companies');
-
-Route::post('/companies', function () {
-
-    request()->validate([
-        'name' => 'required|string|max:255',
-        'address' => 'nullable|string|max:255',
-        'logo' => 'nullable|image|max:2048',
-    ]);
-
-    $logoPath = null;
-
-    if (request()->file('logo')) {
-
-        $cloudinary = new Cloudinary([
-            'cloud' => [
-                'cloud_name' => 'dsp9gbvou',
-                'api_key' => '417664871347829',
-                'api_secret' => 'NnAU2Y4ayxwmB95No56egSY0xc4',
-            ],
-            'url' => [
-                'secure' => true
-            ]
-        ]);
-
-        $upload = $cloudinary->uploadApi()->upload(
-            request()->file('logo')->getRealPath()
-        );
-
-        $logoPath = $upload['secure_url']; // 🔥 KEY FIX
-    }
-
-    Company::create([
-        'name' => request('name'),
-        'address' => request('address'),
-        'logo' => $logoPath
-    ]);
-
-    return redirect()->route('admin.companies');
-
-});
-
-    Route::put('/companies/{id}', function ($id) {
-
-        $company = Company::findOrFail($id);
-
-        request()->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'logo' => 'nullable|image|max:2048',
-        ]);
-
-if (request()->file('logo')) {
-
-    $cloudinary = new Cloudinary([
-        'cloud' => [
-            'cloud_name' => 'dsp9gbvou',
-            'api_key' => '417664871347829',
-            'api_secret' => 'NnAU2Y4ayxwmB95No56egSY0xc4',
-        ],
-        'url' => [
-            'secure' => true
-        ]
-    ]);
-
-    $upload = $cloudinary->uploadApi()->upload(
-        request()->file('logo')->getRealPath()
-    );
-
-    $company->logo = $upload['secure_url']; // 🔥 FIX
-}
-
-        $company->name = request('name');
-        $company->address = request('address');
-        $company->save();
-
-        return redirect()->route('admin.companies');
-
-    })->name('admin.companies.update');
-
-Route::delete('/companies/{id}', function ($id) {
-
-    $company = Company::findOrFail($id);
-
-    $company->delete(); // 🔥 ADD THIS
-
-    return redirect()->route('admin.companies');
-
-})->name('admin.companies.delete');
-
     Route::get('/records', fn() => Inertia::render('Admin/Records/Index'))->name('admin.records');
     Route::get('/reports', fn() => Inertia::render('Admin/Reports/Index'))->name('admin.reports');
     Route::get('/attendance', fn() => Inertia::render('Admin/Attendance/Index'))->name('admin.attendance');
     Route::get('/notifications', fn() => Inertia::render('Admin/Notifications/Index'))->name('admin.notifications');
     Route::get('/settings', fn() => Inertia::render('Admin/Settings/Index'))->name('admin.settings');
+    Route::get('/companies', [CompanyController::class, 'index'])
+    ->name('admin.companies');
+    Route::post('/companies', [CompanyController::class, 'store'])
+    ->name('admin.companies.store');
+    Route::put('/companies/{id}', [CompanyController::class, 'update'])
+    ->name('admin.companies.update');
+    Route::delete('/companies/{id}', [CompanyController::class, 'destroy'])
+    ->name('admin.companies.delete');
 
 });
 
