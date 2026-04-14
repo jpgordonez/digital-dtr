@@ -7,7 +7,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
         <div class="p-6">
             <h1 class="text-2xl font-bold 
                        text-gray-800 dark:text-gray-100">
-                Admin Reports
+                Admin Reportsssssss
             </h1>
         </div>
     </AuthenticatedLayout>
