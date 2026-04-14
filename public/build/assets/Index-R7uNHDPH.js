@@ -1,1 +1,0 @@
-import{_ as e}from"./AuthenticatedLayout-CNHnrZyw.js";import{c as o,w as s,a,o as r}from"./app-CSz9Pqmr.js";import"./sun-DAl8SU4J.js";const m={__name:"Index",setup(n){return(i,t)=>(r(),o(e,null,{default:s(()=>[...t[0]||(t[0]=[a("div",{class:"p-6"},[a("h1",{class:"text-2xl font-bold text-gray-800 dark:text-gray-100"}," Admin Notifications ")],-1)])]),_:1}))}};export{m as default};
