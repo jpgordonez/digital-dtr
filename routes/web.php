@@ -12,7 +12,7 @@ use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\RecordController;
 use App\Http\Controllers\User\SettingsController;
 use Illuminate\Support\Facades\Auth;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Cloudinary\Cloudinary;
 
 
 // LANDING PAGE
@@ -55,16 +55,22 @@ Route::post('/companies', function () {
 
     if (request()->file('logo')) {
 
-        $upload = Cloudinary::upload(
-            request()->file('logo')->getRealPath(),
-            [
+        $cloudinary = new Cloudinary([
+            'cloud' => [
                 'cloud_name' => 'dsp9gbvou',
                 'api_key' => '417664871347829',
                 'api_secret' => 'NnAU2Y4ayxwmB95No56egSY0xc4',
+            ],
+            'url' => [
+                'secure' => true
             ]
+        ]);
+
+        $upload = $cloudinary->uploadApi()->upload(
+            request()->file('logo')->getRealPath()
         );
 
-        $logoPath = $upload->getSecurePath(); // ✅ tama na
+        $logoPath = $upload['secure_url']; // 🔥 KEY FIX
     }
 
     Company::create([
@@ -87,20 +93,25 @@ Route::post('/companies', function () {
             'logo' => 'nullable|image|max:2048',
         ]);
 
-        if (request()->file('logo')) {
+if (request()->file('logo')) {
 
-            $company->logo = $upload = Cloudinary::upload(
-    request()->file('logo')->getRealPath(),
-    [
-        'cloud_name' => 'dsp9gbvou',
-        'api_key' => '417664871347829',
-        'api_secret' => 'NnAU2Y4ayxwmB95No56egSY0xc4',
-    ]
-);
+    $cloudinary = new Cloudinary([
+        'cloud' => [
+            'cloud_name' => 'dsp9gbvou',
+            'api_key' => '417664871347829',
+            'api_secret' => 'NnAU2Y4ayxwmB95No56egSY0xc4',
+        ],
+        'url' => [
+            'secure' => true
+        ]
+    ]);
 
-$company->logo = $upload->getSecurePath(); 
+    $upload = $cloudinary->uploadApi()->upload(
+        request()->file('logo')->getRealPath()
+    );
 
-        }
+    $company->logo = $upload['secure_url']; // 🔥 FIX
+}
 
         $company->name = request('name');
         $company->address = request('address');
