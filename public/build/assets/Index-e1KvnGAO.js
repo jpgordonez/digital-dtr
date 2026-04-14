@@ -1,1 +1,0 @@
-import{_ as e}from"./AuthenticatedLayout-BQDYytU0.js";import{c as s,w as r,a,o}from"./app-DqyKDALI.js";import"./sun-EOBDMzZY.js";const m={__name:"Index",setup(n){return(l,t)=>(o(),s(e,null,{default:r(()=>[...t[0]||(t[0]=[a("div",{class:"p-6"},[a("h1",{class:"text-2xl font-bold text-gray-800 dark:text-gray-100"}," Admin Settings ")],-1)])]),_:1}))}};export{m as default};
