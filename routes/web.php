@@ -43,31 +43,39 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         ]);
     })->name('admin.companies');
 
-    Route::post('/companies', function () {
+Route::post('/companies', function () {
 
-        request()->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'logo' => 'nullable|image|max:2048',
-        ]);
+    request()->validate([
+        'name' => 'required|string|max:255',
+        'address' => 'nullable|string|max:255',
+        'logo' => 'nullable|image|max:2048',
+    ]);
 
-$logoPath = null;
+    $logoPath = null;
 
-if (request()->file('logo')) {
-    $logoPath = Cloudinary::upload(
-        request()->file('logo')->getRealPath()
-    )->getSecurePath();
-}
+    if (request()->file('logo')) {
 
-        Company::create([
-            'name' => request('name'),
-            'address' => request('address'),
-            'logo' => $logoPath
-        ]);
+        $upload = Cloudinary::upload(
+            request()->file('logo')->getRealPath(),
+            [
+                'cloud_name' => 'dsp9gbvou',
+                'api_key' => '417664871347829',
+                'api_secret' => 'NnAU2Y4ayxwmB95No56egSY0xc4',
+            ]
+        );
 
-        return redirect()->route('admin.companies');
+        $logoPath = $upload->getSecurePath(); // ✅ tama na
+    }
 
-    })->name('admin.companies.store');
+    Company::create([
+        'name' => request('name'),
+        'address' => request('address'),
+        'logo' => $logoPath
+    ]);
+
+    return redirect()->route('admin.companies');
+
+});
 
     Route::put('/companies/{id}', function ($id) {
 
@@ -81,9 +89,16 @@ if (request()->file('logo')) {
 
         if (request()->file('logo')) {
 
-            $company->logo = Cloudinary::upload(
-    request()->file('logo')->getRealPath()
-)->getSecurePath();
+            $company->logo = $upload = Cloudinary::upload(
+    request()->file('logo')->getRealPath(),
+    [
+        'cloud_name' => 'dsp9gbvou',
+        'api_key' => '417664871347829',
+        'api_secret' => 'NnAU2Y4ayxwmB95No56egSY0xc4',
+    ]
+);
+
+$company->logo = $upload->getSecurePath(); 
 
         }
 
