@@ -5,7 +5,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Company;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\User\AttendanceController;
@@ -13,6 +12,8 @@ use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\RecordController;
 use App\Http\Controllers\User\SettingsController;
 use Illuminate\Support\Facades\Auth;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 
 // LANDING PAGE
 Route::get('/', function () {
@@ -50,11 +51,13 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
             'logo' => 'nullable|image|max:2048',
         ]);
 
-        $logoPath = null;
+$logoPath = null;
 
-        if (request()->file('logo')) {
-            $logoPath = request()->file('logo')->store('companies', 'public');
-        }
+if (request()->file('logo')) {
+    $logoPath = Cloudinary::upload(
+        request()->file('logo')->getRealPath()
+    )->getSecurePath();
+}
 
         Company::create([
             'name' => request('name'),
@@ -77,11 +80,11 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         ]);
 
         if (request()->file('logo')) {
-            if ($company->logo) {
-                Storage::disk('public')->delete($company->logo);
-            }
 
-            $company->logo = request()->file('logo')->store('companies', 'public');
+            $company->logo = Cloudinary::upload(
+    request()->file('logo')->getRealPath()
+)->getSecurePath();
+
         }
 
         $company->name = request('name');
@@ -92,19 +95,15 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
     })->name('admin.companies.update');
 
-    Route::delete('/companies/{id}', function ($id) {
+Route::delete('/companies/{id}', function ($id) {
 
-        $company = Company::findOrFail($id);
+    $company = Company::findOrFail($id);
 
-        if ($company->logo) {
-            Storage::disk('public')->delete($company->logo);
-        }
+    $company->delete(); // 🔥 ADD THIS
 
-        $company->delete();
+    return redirect()->route('admin.companies');
 
-        return redirect()->route('admin.companies');
-
-    })->name('admin.companies.delete');
+})->name('admin.companies.delete');
 
     Route::get('/records', fn() => Inertia::render('Admin/Records/Index'))->name('admin.records');
     Route::get('/reports', fn() => Inertia::render('Admin/Reports/Index'))->name('admin.reports');
