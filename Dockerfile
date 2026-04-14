@@ -79,7 +79,7 @@ COPY . .
 COPY --from=composer-builder /var/www/html/vendor vendor/
 
 # gamitin yung galing sa repo (local build)
-COPY public/build public/build
+COPY --from=node-builder /app/public/build public/build
 
 # ── Laravel bootstrap ────────────────────────────────────────
 RUN mkdir -p storage/framework/sessions \
