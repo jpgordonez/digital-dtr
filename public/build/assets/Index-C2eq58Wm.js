@@ -1,0 +1,1 @@
+import{_ as e}from"./AuthenticatedLayout-eJZtu1cG.js";import{c as r,w as s,a,o}from"./app-Dxuvhkx9.js";import"./sun-xCbmHdzR.js";const m={__name:"Index",setup(n){return(c,t)=>(o(),r(e,null,{default:s(()=>[...t[0]||(t[0]=[a("div",{class:"p-6"},[a("h1",{class:"text-2xl font-bold text-gray-800 dark:text-gray-100"}," Admin DTR Records ")],-1)])]),_:1}))}};export{m as default};
