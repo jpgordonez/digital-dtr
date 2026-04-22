@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2026 at 02:50 AM
+-- Generation Time: Apr 22, 2026 at 03:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -124,7 +124,13 @@ INSERT INTO `attendances` (`id`, `user_id`, `date`, `status`, `remarks`, `time_i
 (75, 3, '2026-04-12', 'Dayoff', NULL, NULL, NULL, NULL, NULL, 0.00, '2026-04-12 16:40:58', '2026-04-12 16:40:58'),
 (76, 3, '2026-04-13', 'present', NULL, '07:24:00', '12:03:00', '12:55:00', '18:35:00', 10.32, '2026-04-12 16:42:10', '2026-04-13 07:23:46'),
 (77, 3, '2026-04-14', 'present', NULL, '07:26:00', '12:06:00', '12:57:00', '18:39:00', 10.37, '2026-04-13 16:41:57', '2026-04-14 03:32:32'),
-(78, 3, '2026-04-15', 'present', NULL, '07:27:00', '12:01:00', '12:57:00', '18:35:00', 10.20, '2026-04-15 02:09:06', '2026-04-19 16:49:16');
+(78, 3, '2026-04-15', 'present', NULL, '07:27:00', '12:01:00', '12:57:00', '18:35:00', 10.20, '2026-04-15 02:09:06', '2026-04-19 16:49:16'),
+(79, 3, '2026-04-16', 'absent', NULL, NULL, NULL, NULL, NULL, 0.00, '2026-04-21 16:44:59', '2026-04-21 16:44:59'),
+(80, 3, '2026-04-17', 'Dayoff', NULL, NULL, NULL, NULL, NULL, 0.00, '2026-04-21 16:45:37', '2026-04-21 16:45:37'),
+(81, 3, '2026-04-18', 'weekend', NULL, NULL, NULL, NULL, NULL, 0.00, '2026-04-21 16:45:47', '2026-04-21 16:45:47'),
+(82, 3, '2026-04-19', 'weekend', NULL, NULL, NULL, NULL, NULL, 0.00, '2026-04-21 16:46:00', '2026-04-21 16:46:00'),
+(83, 3, '2026-04-20', 'present', NULL, '07:24:00', '12:02:00', '12:56:00', '18:36:00', 10.30, '2026-04-21 16:46:48', '2026-04-21 16:46:48'),
+(84, 3, '2026-04-21', 'present', NULL, '07:26:00', '12:05:00', '12:58:00', '18:31:00', 10.20, '2026-04-21 16:47:44', '2026-04-21 16:47:44');
 
 -- --------------------------------------------------------
 
@@ -315,7 +321,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `profile_photo`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `company_id`, `required_hours`, `rendered_hours`, `signatory_name`, `signatory_position`) VALUES
 (1, 'Admin', 'admin@gmail.com', NULL, NULL, '$2y$12$LIb/x74LayyjZ6bK9P8ASeRARo4837l5Zlnc9c6xrAr3QPikVLNbi', NULL, '2026-04-07 17:08:38', '2026-04-07 17:08:38', 'admin', NULL, 0, 0.00, NULL, NULL),
 (2, 'Student User', 'student@gmail.com', NULL, NULL, '$2y$12$IE5T0tDhGfJEvExE6JgtyOZaZCV4v.ClBOw5mOX4ysvJa/cLrJkWS', NULL, '2026-04-07 17:08:38', '2026-04-07 18:06:46', 'user', 1, 486, 26.59, NULL, NULL),
-(3, 'John Paul G. Ordoñez', 'jpgordonez@gmail.com', 'profiles/CV2HjVaZamEITf2ESuev9GhtjcccuXGBhwVJZ5Za.jpg', NULL, '$2y$12$YG4Zpzc2wxxPxJqXidHoA.BlYWlKklEmP2n37TfCwW7swt3dxEZSO', NULL, '2026-04-07 17:32:43', '2026-04-19 16:49:16', 'user', 1, 486, 361.70, 'AMEEN ANDREW L. ALONTO', 'Executive Director');
+(3, 'John Paul G. Ordoñez', 'jpgordonez@gmail.com', 'profiles/CV2HjVaZamEITf2ESuev9GhtjcccuXGBhwVJZ5Za.jpg', NULL, '$2y$12$YG4Zpzc2wxxPxJqXidHoA.BlYWlKklEmP2n37TfCwW7swt3dxEZSO', NULL, '2026-04-07 17:32:43', '2026-04-21 16:47:44', 'user', 1, 486, 382.20, 'AMEEN ANDREW L. ALONTO', 'Executive Director');
 
 --
 -- Indexes for dumped tables
@@ -404,7 +410,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `companies`

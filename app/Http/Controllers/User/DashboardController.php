@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $remaining = round(max($required - $rendered, 0), 2);
 
         // 🔥 ESTIMATED END DATE (MOVED HERE)
-        $dailyHours = 8;
+        $dailyHours = 10;
 
         $remainingDays = $dailyHours > 0 
             ? ceil($remaining / $dailyHours) 
@@ -35,7 +35,11 @@ class DashboardController extends Controller
             while ($remainingDays > 0) {
                 $date->addDay();
 
-                if (!$date->isWeekend()) {
+                if (
+    !$date->isFriday() &&
+    !$date->isSaturday() &&
+    !$date->isSunday()
+) {
                     $remainingDays--;
                 }
             }
