@@ -64,14 +64,15 @@ const submit = () => {
                     <!-- EMAIL -->
                     <div>
                         <InputLabel for="email" value="Email" />
+
                         <TextInput
                             id="email"
                             type="email"
-                            class="mt-2 block w-full"
+                            class="mt-2 block w-full bg-gray-100 dark:bg-[#1a1a1a] cursor-not-allowed"
                             v-model="form.email"
-                            required
-                            autofocus
+                            readonly
                         />
+
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
 

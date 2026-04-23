@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\ResetPasswordBrevoNotification;
 
 class User extends Authenticatable
 {
@@ -57,5 +58,10 @@ protected $fillable = [
     public function attendances()
         {
             return $this->hasMany(\App\Models\Attendance::class);
+        }
+
+        public function sendPasswordResetNotification($token): void
+        {
+            $this->notify(new ResetPasswordBrevoNotification($token));
         }
 }
