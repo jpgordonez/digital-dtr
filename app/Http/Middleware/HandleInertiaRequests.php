@@ -21,12 +21,13 @@ class HandleInertiaRequests extends Middleware
 
             // 🔐 AUTH USER (GLOBAL)
             'auth' => [
-                'user' => $request->user() ? [
-                    'id' => $request->user()->id,
-                    'name' => $request->user()->name,
-                    'email' => $request->user()->email,
-                    'role' => $request->user()->role,
-                ] : null,
+'user' => $request->user() ? [
+    'id' => $request->user()->id,
+    'name' => $request->user()->name,
+    'email' => $request->user()->email,
+    'role' => $request->user()->role,
+    'profile_photo' => $request->user()->profile_photo,
+] : null,
             ],
 
             // 🔥 GLOBAL FLASH (IMPORTANT)

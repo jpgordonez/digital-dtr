@@ -50,6 +50,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/companies/{id}', [CompanyController::class, 'destroy'])
     ->name('admin.companies.delete');
 
+    Route::post('/settings/upload-profile', [SettingsController::class, 'uploadProfile']);
+    Route::post('/settings/update-profile', [SettingsController::class, 'updateProfile']);
+    Route::post('/settings/update-password', [SettingsController::class, 'updatePassword']);
+
 });
 
 // =========================
