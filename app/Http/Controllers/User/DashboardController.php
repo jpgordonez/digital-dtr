@@ -20,27 +20,30 @@ class DashboardController extends Controller
         $rendered = $user->rendered_hours ?? 0;
         $remaining = round(max($required - $rendered, 0), 2);
 
-        // 🔥 ESTIMATED END DATE (MOVED HERE)
+        // DAILY HOURS
         $dailyHours = 10;
 
-        $remainingDays = $dailyHours > 0 
-            ? ceil($remaining / $dailyHours) 
+        // REMAINING DUTY DAYS
+        $remainingDutyDays = $dailyHours > 0
+            ? ceil($remaining / $dailyHours)
             : 0;
 
+        // ESTIMATED END DATE
         $estimatedEnd = null;
 
-        if ($remainingDays > 0) {
+        if ($remainingDutyDays > 0) {
             $date = Carbon::now();
+            $daysLeft = $remainingDutyDays;
 
-            while ($remainingDays > 0) {
+            while ($daysLeft > 0) {
                 $date->addDay();
 
                 if (
-    !$date->isFriday() &&
-    !$date->isSaturday() &&
-    !$date->isSunday()
-) {
-                    $remainingDays--;
+                    !$date->isFriday() &&
+                    !$date->isSaturday() &&
+                    !$date->isSunday()
+                ) {
+                    $daysLeft--;
                 }
             }
 
@@ -54,6 +57,7 @@ class DashboardController extends Controller
                 'required' => $required,
                 'rendered' => $rendered,
                 'remaining' => $remaining,
+                'remaining_duty_days' => $remainingDutyDays,
                 'estimated_end' => $estimatedEnd,
             ],
 

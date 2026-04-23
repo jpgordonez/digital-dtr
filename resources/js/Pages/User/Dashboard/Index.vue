@@ -213,9 +213,26 @@ const formatDate = (date) => {
                 </h2>
 
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    Based on 8 hrs/day (no weekends)
+                    Based on 10 hrs/day (no weekends)
                 </p>
 
+            </div>
+
+            <!-- REMAINING DUTY DAYS -->
+            <div class="bg-white dark:bg-[#111] 
+                        border border-gray-200 dark:border-[#1f1f1f] 
+                        rounded-xl p-4 shadow-sm">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Remaining Duty Days
+                </p>
+
+                <h2 class="text-xl font-semibold text-indigo-600">
+                    {{ props.stats.remaining_duty_days }} day(s)
+                </h2>
+
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    Based on 10 hrs/day
+                </p>
             </div>
 
         </div>
