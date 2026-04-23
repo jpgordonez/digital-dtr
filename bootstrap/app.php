@@ -12,17 +12,16 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
 
-        // ✅ Web middleware
+        $middleware->trustProxies(at: '*');
+
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        // ✅ ADD THIS (IMPORTANT 🔥)
         $middleware->alias([
-            'role' => \App\Http\Middleware\RoleMiddleware::class,  //Undefined type daw to
+            'role' => \App\Http\Middleware\RoleMiddleware::class,
         ]);
-
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
