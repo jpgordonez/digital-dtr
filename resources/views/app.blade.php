@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title inertia>DTR System</title>
+    <title inertia>{{ config('app.name', 'Digital DTR') }}</title>
     <link rel="icon" type="image/png" href="/images/icons/part-time.png">
 
     <!-- NO FLASH DARK MODE FIX 🔥 -->
