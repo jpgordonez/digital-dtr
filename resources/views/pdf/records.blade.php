@@ -115,7 +115,17 @@
         </tr>
     </thead>
     <tbody>
-    @php $total = 0; @endphp
+    @php
+        $total = 0;
+
+        $formatTime = function ($time) {
+            if (!$time) {
+                return '-';
+            }
+
+            return \Carbon\Carbon::parse($time)->format('g:i a');
+        };
+    @endphp
 
     @forelse($records as $r)
 
@@ -138,8 +148,8 @@
             <!-- ✅ NORMAL ROW -->
             <tr>
                 <td>{{ \Carbon\Carbon::parse($r->date)->format('M d, Y') }}</td>
-                <td>{{ $r->time_in_am }} - {{ $r->time_out_am }}</td>
-                <td>{{ $r->time_in_pm }} - {{ $r->time_out_pm }}</td>
+                <td>{{ $formatTime($r->time_in_am) }} - {{ $formatTime($r->time_out_am) }}</td>
+                <td>{{ $formatTime($r->time_in_pm) }} - {{ $formatTime($r->time_out_pm) }}</td>
                 <td>{{ number_format($r->hours_rendered, 2) }}</td>
             </tr>
 
